@@ -43,7 +43,7 @@ public class MapManager : MonoBehaviour
         var childCount = transform.childCount;
 
         for (var i = 0; i < childCount; i++) {
-            Destroy(transform.GetChild(i).gameObject);
+            DestroyImmediate(transform.GetChild(i).gameObject);
         }
     }
 
