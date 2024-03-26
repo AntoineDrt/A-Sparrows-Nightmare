@@ -10,9 +10,12 @@ public class InputMovement : MonoBehaviour
   private Vector3 targetPosition;
   private bool isMoving = false;
 
+  private MapManager mapManager;
+
   void Start()
   {
     InputsInitializer.InitMoveAction(OnMovePerformed);
+    mapManager = FindObjectOfType<MapManager>();
   }
 
   void Update()
@@ -42,7 +45,7 @@ public class InputMovement : MonoBehaviour
       {
         currentDirection = Vector2Int.left;
       }
-      else if (input.y > 0) 
+      else if (input.y > 0)
       {
         currentDirection = Vector2Int.up;
       }
@@ -52,7 +55,23 @@ public class InputMovement : MonoBehaviour
       }
 
       targetPosition = transform.position + new Vector3(currentDirection.x, 0f, currentDirection.y);
-      isMoving = true;
+      isMoving = CanMoveTo(targetPosition);
     }
+  }
+
+  private bool CanMoveTo(Vector3 targetPosition)
+  {
+    var targetPosition2D = new Vector2Int((int)targetPosition.x, (int)targetPosition.z);
+
+    if (mapManager.FloorMap.ContainsKey(targetPosition2D))
+    {
+      if (mapManager.ObjectsMap.ContainsKey(targetPosition2D)) {
+        return false;
+      }
+
+      return true;
+    }
+
+    return false;
   }
 }
