@@ -1,12 +1,10 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Movable : Object
 {
-  public UnityEvent<Movable> hasMoved;
   public Vector2Int oldPosition;
   public Vector2Int currentPosition;
-  public float moveSpeed = 5f;
+  public float moveSpeed = 10f;
   public bool isMoving = false;
 
   public bool CanMoveTo(Vector3 targetPosition)
@@ -36,7 +34,6 @@ public class Movable : Object
         currentPosition = Converter.To2D(transform.position);
         mapManager.UpdateMapPosition(oldPosition, currentPosition, this);
         oldPosition = currentPosition;
-        hasMoved.Invoke(this);
         isMoving = false;
       }
     }

@@ -12,7 +12,6 @@ public class PlayerMovement : Movable
 
   public virtual void Start()
   {
-    hasMoved ??= new UnityEvent<Movable>();
     moveInDirection ??= new UnityEvent<Vector2Int>();
     oldPosition = Converter.To2D(transform.position);
     InputsInitializer.InitMoveAction(OnMovePerformed);
@@ -46,9 +45,9 @@ public class PlayerMovement : Movable
         currentDirection = Vector2Int.down;
       }
 
-      moveInDirection.Invoke(currentDirection);
       targetPosition = GetTargetPosition(currentDirection);
       isMoving = CanMoveTo(targetPosition);
+      moveInDirection.Invoke(currentDirection);
     }
   }
 }
