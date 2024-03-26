@@ -5,15 +5,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : Movable
 {
+  public UnityEvent<Vector2Int> moveInDirection;
+  
   private Vector2Int currentDirection = Vector2Int.zero;
   private Vector3 targetPosition;
 
-  public override void Start()
+  public virtual void Start()
   {
-    base.Start();
     hasMoved ??= new UnityEvent<Movable>();
-    InputsInitializer.InitMoveAction(OnMovePerformed);
+    moveInDirection ??= new UnityEvent<Vector2Int>();
     oldPosition = Converter.To2D(transform.position);
+    InputsInitializer.InitMoveAction(OnMovePerformed);
   }
 
   void Update()
@@ -44,7 +46,8 @@ public class PlayerMovement : Movable
         currentDirection = Vector2Int.down;
       }
 
-      targetPosition = transform.position + new Vector3(currentDirection.x, 0f, currentDirection.y);
+      moveInDirection.Invoke(currentDirection);
+      targetPosition = GetTargetPosition(currentDirection);
       isMoving = CanMoveTo(targetPosition);
     }
   }

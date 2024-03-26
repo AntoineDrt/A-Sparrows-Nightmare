@@ -1,28 +1,32 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-[ExecuteAlways]
 public class MapManager : MonoBehaviour
 {
     [SerializeField] TextAsset Blueprint;
     [SerializeField] GameObject Floor;
-    [SerializeField] GameObject Bomb;
-    [SerializeField] GameObject Vent;
-    [SerializeField] GameObject Rock;
-    [SerializeField] GameObject Player;
-    [SerializeField] GameObject Clone;
+    [SerializeField] Object Bomb;
+    [SerializeField] Object Vent;
+    [SerializeField] Object Rock;
+    [SerializeField] PlayerMovement Player;
+    [SerializeField] CloneMovement Clone;
+
+    public UnityEvent Ready;
 
     public Dictionary<Vector2Int, GameObject> FloorMap = new();
-    public Dictionary<Vector2Int, GameObject> ObjectsMap = new();
+    public Dictionary<Vector2Int, Object> ObjectsMap = new();
 
-    void Awake()
+    void Start()
     {
+        Ready ??= new UnityEvent();
         CleanUp();
         GenerateMap();
+        Ready.Invoke();
     }
 
-    public void UpdateMapPosition(Vector2Int oldPosition, Vector2Int newPosition, GameObject entity)
+    public void UpdateMapPosition(Vector2Int oldPosition, Vector2Int newPosition, Object entity)
     {
         ObjectsMap.Add(newPosition, entity);
         ObjectsMap.Remove(oldPosition);
@@ -46,8 +50,8 @@ public class MapManager : MonoBehaviour
 
             if (c != '.')
             {
-                GameObject entity = CharToEntity(c);
-                SpawnEntity(entity, x, y);
+                Object entity = CharToEntity(c);
+                SpawnObject(entity, x, y);
             }
 
             x++;
@@ -64,23 +68,17 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    private GameObject CharToEntity(char c)
+    private Object CharToEntity(char c)
     {
-        switch (c)
+        return c switch
         {
-            case '6':
-                return Player;
-            case '9':
-                return Clone;
-            case 'x':
-                return Bomb;
-            case '#':
-                return Vent;
-            case 'o':
-                return Rock;
-            default:
-                throw new Exception($"Could not handle Blueprint character {c}");
-        }
+            '6' => Player,
+            '9' => Clone,
+            'x' => Bomb,
+            '#' => Vent,
+            'o' => Rock,
+            _ => throw new Exception($"Could not handle Blueprint character {c}"),
+        };
     }
 
     private void SpawnFloor(int x, int y)
@@ -108,7 +106,7 @@ public class MapManager : MonoBehaviour
         FloorMap.Add(new Vector2Int(x, y), instance);
     }
 
-    private void SpawnEntity(GameObject prefab, int x, int y)
+    private void SpawnObject(Object prefab, int x, int y)
     {
         var instance = Instantiate(
             prefab,
@@ -116,7 +114,8 @@ public class MapManager : MonoBehaviour
             Quaternion.identity,
             transform
         );
-
+        
+        instance.mapManager = this;
         instance.transform.SetParent(transform);
         ObjectsMap.Add(new Vector2Int(x, y), instance);
     }
