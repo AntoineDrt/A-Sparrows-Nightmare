@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteAlways]
@@ -12,10 +13,17 @@ public class MapManager : MonoBehaviour
     [SerializeField] GameObject Player;
     [SerializeField] GameObject Clone;
 
+    public Dictionary<Vector2Int, GameObject> FloorMap = new();
+    public Dictionary<Vector2Int, GameObject> ObjectsMap = new();
+
     void Awake()
     {
         CleanUp();
+        GenerateMap();
+    }
 
+    private void GenerateMap()
+    {
         var x = 0;
         var y = 0;
 
@@ -30,7 +38,8 @@ public class MapManager : MonoBehaviour
 
             SpawnFloor(x, y);
 
-            if (c != '.') {
+            if (c != '.')
+            {
                 GameObject entity = CharToEntity(c);
                 SpawnEntity(entity, x, y);
             }
@@ -39,10 +48,12 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    private void CleanUp() {
+    private void CleanUp()
+    {
         var childCount = transform.childCount;
 
-        for (var i = 0; i < childCount; i++) {
+        for (var i = 0; i < childCount - 1; i++)
+        {
             Destroy(transform.GetChild(i).gameObject);
         }
     }
@@ -66,17 +77,19 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    private void SpawnFloor(Int32 x, Int32 y)
+    private void SpawnFloor(int x, int y)
     {
         var instance = Instantiate(
             Floor,
             new Vector3(x, 0f, y),
             Quaternion.identity
         );
+
         instance.transform.SetParent(transform);
+        FloorMap.Add(new Vector2Int(x, y), instance);
     }
 
-    private void SpawnFloor(Int32 x, Int32 y, GameObject prefab)
+    private void SpawnFloor(int x, int y, GameObject prefab)
     {
         var instance = Instantiate(
             prefab,
@@ -84,11 +97,12 @@ public class MapManager : MonoBehaviour
             Quaternion.identity,
             transform
         );
-        instance.transform.SetParent(transform);
 
+        instance.transform.SetParent(transform);
+        FloorMap.Add(new Vector2Int(x, y), instance);
     }
 
-    private void SpawnEntity(GameObject prefab, Int32 x, Int32 y)
+    private void SpawnEntity(GameObject prefab, int x, int y)
     {
         var instance = Instantiate(
             prefab,
@@ -96,6 +110,8 @@ public class MapManager : MonoBehaviour
             Quaternion.identity,
             transform
         );
+
         instance.transform.SetParent(transform);
+        ObjectsMap.Add(new Vector2Int(x, y), instance);
     }
 }
