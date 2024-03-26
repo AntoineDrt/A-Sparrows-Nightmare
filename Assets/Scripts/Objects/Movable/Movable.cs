@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Movable : Object
@@ -6,6 +7,8 @@ public class Movable : Object
   public Vector2Int currentPosition;
   public float moveSpeed = 10f;
   public bool isMoving = false;
+
+  private bool hasAttacked = false;
 
   public bool CanMoveTo(Vector3 targetPosition)
   {
@@ -35,7 +38,27 @@ public class Movable : Object
         mapManager.UpdateMapPosition(oldPosition, currentPosition, this);
         oldPosition = currentPosition;
         isMoving = false;
+        StartCoroutine(AttackAfterDelay(0.3f));
       }
+    }
+  }
+
+    private IEnumerator AttackAfterDelay(float delay)
+  {
+    yield return new WaitForSeconds(delay);
+    TryAttack(currentPosition);
+  }
+
+    private void TryAttack(Vector2Int currentPosition){
+
+    var clone = GameObject.Find("Clone(Clone)");
+
+    var cloneAttack = clone.GetComponent<CloneAttack>();
+
+    if (cloneAttack.canAttack(currentPosition) && !hasAttacked) 
+    {
+      GameObject.Find("GameManager").GetComponent<EndGame>().onLose();
+      hasAttacked = true;
     }
   }
 
