@@ -1,5 +1,3 @@
-
-
 using UnityEngine;
 
 public class CloneMovement : PlayerMovement
@@ -8,12 +6,12 @@ public class CloneMovement : PlayerMovement
 
   public override void Start()
   {
+    base.Start();
     moveInDirection.AddListener(MirrorDirection);
   }
 
   void Update()
   {
-    base.Start();
     MoveTo(targetPosition);
   }
 
