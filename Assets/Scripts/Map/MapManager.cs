@@ -22,6 +22,12 @@ public class MapManager : MonoBehaviour
         GenerateMap();
     }
 
+    public void UpdateMapPosition(Vector2Int oldPosition, Vector2Int newPosition, GameObject entity)
+    {
+        ObjectsMap.Add(newPosition, entity);
+        ObjectsMap.Remove(oldPosition);
+    }
+
     private void GenerateMap()
     {
         var x = 0;

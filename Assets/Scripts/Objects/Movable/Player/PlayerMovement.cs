@@ -1,34 +1,24 @@
 
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class InputMovement : MonoBehaviour
+public class PlayerMovement : Movable
 {
-  public float moveSpeed = 5f;
-
   private Vector2Int currentDirection = Vector2Int.zero;
   private Vector3 targetPosition;
-  private bool isMoving = false;
 
-  private MapManager mapManager;
-
-  void Start()
+  public override void Start()
   {
+    base.Start();
+    hasMoved ??= new UnityEvent<Movable>();
     InputsInitializer.InitMoveAction(OnMovePerformed);
-    mapManager = FindObjectOfType<MapManager>();
+    oldPosition = Converter.To2D(transform.position);
   }
 
   void Update()
   {
-    if (isMoving)
-    {
-      transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-
-      if (transform.position == targetPosition)
-      {
-        isMoving = false;
-      }
-    }
+    MoveTo(targetPosition);
   }
 
   public void OnMovePerformed(InputAction.CallbackContext context)
@@ -57,21 +47,5 @@ public class InputMovement : MonoBehaviour
       targetPosition = transform.position + new Vector3(currentDirection.x, 0f, currentDirection.y);
       isMoving = CanMoveTo(targetPosition);
     }
-  }
-
-  private bool CanMoveTo(Vector3 targetPosition)
-  {
-    var targetPosition2D = new Vector2Int((int)targetPosition.x, (int)targetPosition.z);
-
-    if (mapManager.FloorMap.ContainsKey(targetPosition2D))
-    {
-      if (mapManager.ObjectsMap.ContainsKey(targetPosition2D)) {
-        return false;
-      }
-
-      return true;
-    }
-
-    return false;
   }
 }
