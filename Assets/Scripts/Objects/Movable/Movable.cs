@@ -8,51 +8,35 @@ public class Movable : Object
   public Vector2Int currentPosition;
   public float moveSpeed = 10f;
   public bool isMoving = false;
+  public Vector2Int currentDirection = Vector2Int.zero;
+  public Vector3 targetPosition;
 
   private bool hasAttacked = false;
 
-  public bool CanMoveTo(Vector3 targetPosition, Boolean isClone)
+  public virtual void Start()
   {
-    var targetPosition2D = Converter.To2D(targetPosition);
+    oldPosition = Converter.To2D(transform.position);
+  }
 
-    // If the game has ended, no one can move anymore
-    if (GameObject.Find("GameManager").GetComponent<EndGame>().gameEnded)
-    {
-      return false;
-    }
+  void Update()
+  {
+    MoveTo(targetPosition);
+  }
 
-    if (mapManager.FloorMap.ContainsKey(targetPosition2D))
-    {
-      // If the clone is the one moving and the target contains a vent obstacle, return true
-      if (isClone && mapManager.ObjectsMap.ContainsKey(targetPosition2D))
-      {
-        if (mapManager.ObjectsMap[targetPosition2D].CompareTag("Vent"))
-        {
-          return true;
-        }
-      }
+  // If the game has ended, no one can move anymore
+  public bool IsMovingDisabled()
+  {
+    return GameObject.Find("GameManager").GetComponent<EndGame>().gameEnded;
+  }
 
-      if (mapManager.ObjectsMap.ContainsKey(targetPosition2D))
-      {
-        // Depending on who steps on the bomb, the game is won or lost
-        if (mapManager.ObjectsMap[targetPosition2D].CompareTag("Bomb"))
-        {
-          if (!isClone)
-          {
-            GameObject.Find("GameManager").GetComponent<EndGame>().onLose();
-          }
-          else
-          {
-            GameObject.Find("GameManager").GetComponent<EndGame>().onWin();
-          }
-          return true;
-        }
-        return false;
-      }
-      return true;
-    }
+  public bool IsInsideMap(Vector2Int targetPosition)
+  {
+    return mapManager.FloorMap.ContainsKey(targetPosition);
+  }
 
-    return false;
+  public bool IsPositionOccupied(Vector2Int targetPosition)
+  {
+    return mapManager.ObjectsMap.ContainsKey(targetPosition);
   }
 
   public void MoveTo(Vector3 targetPosition)

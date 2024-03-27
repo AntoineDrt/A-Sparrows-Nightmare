@@ -1,23 +1,68 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class CloneMovement : PlayerMovement
+public class CloneMovement : Movable
 {
-  private Vector3 targetPosition;
 
   public override void Start()
   {
     base.Start();
-    moveInDirection.AddListener(MirrorDirection);
+    InputsInitializer.InitMoveAction(OnMovePerformed);
   }
 
-  void Update()
+  public void OnMovePerformed(InputAction.CallbackContext context)
   {
-    MoveTo(targetPosition);
+    if (!isMoving)
+    {
+      Vector2 input = context.ReadValue<Vector2>();
+
+      if (input.x > 0)
+      {
+        currentDirection = Vector2Int.left;
+      }
+      else if (input.x < 0)
+      {
+        currentDirection = Vector2Int.right;
+      }
+      else if (input.y > 0)
+      {
+        currentDirection = Vector2Int.down;
+      }
+      else if (input.y < 0)
+      {
+        currentDirection = Vector2Int.up;
+      }
+
+      targetPosition = GetTargetPosition(currentDirection);
+      isMoving = CanCloneMoveTo(targetPosition);
+    }
   }
 
-  private void MirrorDirection(Vector2Int direction)
+  public bool CanCloneMoveTo(Vector3 targetPosition)
   {
-    targetPosition = GetTargetPosition(-direction);
-    isMoving = CanMoveTo(targetPosition, true);
+    var targetPosition2D = Converter.To2D(targetPosition);
+
+    if (IsMovingDisabled() || !IsInsideMap(targetPosition2D))
+    {
+      return false;
+    }
+
+    if (IsPositionOccupied(targetPosition2D))
+    {
+      if (mapManager.ObjectsMap[targetPosition2D].CompareTag("Vent"))
+      {
+        return true;
+      }
+
+      if (mapManager.ObjectsMap[targetPosition2D].CompareTag("Bomb"))
+      {
+        GameObject.Find("GameManager").GetComponent<EndGame>().onWin();
+        return true;
+      }
+
+      return false;
+    }
+
+    return true;
   }
 }
