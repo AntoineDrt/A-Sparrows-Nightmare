@@ -1,18 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CloneAttack : Object
 {
-    // Start is called before the first frame update
+    private Animator animator;
+
     void Start()
     {
         mapManager = this.mapManager ?? FindObjectOfType<MapManager>();
+        animator = gameObject.GetComponentInChildren<Animator>();
     }
 
     public bool CanAttack(Vector2Int currentPosition)
     {
-        // Check every adjacent tiles, diagonals included. If the player is on any of them, return true.
         var adjacentTiles = new List<Vector2Int>
         {
             new Vector2Int(1, 0),
@@ -33,6 +33,11 @@ public class CloneAttack : Object
             {
                 if (mapManager.EntitiesMap[targetPosition2D].GetType() == typeof(PlayerMovement))
                 {
+                    animator.SetBool("isAttacking", true);
+
+                    var player = GameObject.FindGameObjectWithTag("Player");
+                    transform.LookAt(player.transform);
+
                     return true;
                 }
             }
