@@ -33,6 +33,10 @@ public class EndGame : MonoBehaviour
 
     public void onLose()
     {
+        var player = GameObject.FindGameObjectWithTag("Player");
+        var animator = player.GetComponentInChildren<Animator>();
+        animator.SetBool("isDying", true);
+
         gameEnded = true;
         whiteFadeIn.SetActive(true);
         StartCoroutine(ReloadScene());

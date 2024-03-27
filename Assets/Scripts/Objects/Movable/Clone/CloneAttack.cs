@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,6 +34,10 @@ public class CloneAttack : Object
                 if (mapManager.EntitiesMap[targetPosition2D].GetType() == typeof(PlayerMovement))
                 {
                     animator.SetBool("isAttacking", true);
+
+                    var player = GameObject.FindGameObjectWithTag("Player");
+                    transform.LookAt(player.transform);
+
                     return true;
                 }
             }
