@@ -22,6 +22,14 @@ public class EndGame : MonoBehaviour
     {
         gameEnded = true;
         whiteFadeIn.SetActive(true);
+        if(SceneManager.GetActiveScene().buildIndex == 6)
+        {
+            StartCoroutine(LoadMainMenu());
+        }
+        else
+        {
+            StartCoroutine(LoadNextScene());
+        }
         StartCoroutine(LoadNextScene());
     }
 
@@ -29,6 +37,12 @@ public class EndGame : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    IEnumerator LoadMainMenu()
+    {
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene(0);
     }
 
     public void onLose()
