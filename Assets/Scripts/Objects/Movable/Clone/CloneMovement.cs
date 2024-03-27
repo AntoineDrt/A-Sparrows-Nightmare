@@ -17,18 +17,7 @@ public class CloneMovement : PlayerMovement
 
   private void MirrorDirection(Vector2Int direction)
   {
-    var mirrorDirection = direction;
-
-    if (direction == Vector2Int.down)
-    {
-      mirrorDirection = Vector2Int.up;
-    }
-    if (direction == Vector2Int.up)
-    {
-      mirrorDirection = Vector2Int.down;
-    }
-
-    targetPosition = GetTargetPosition(mirrorDirection);
+    targetPosition = GetTargetPosition(-direction);
     isMoving = CanMoveTo(targetPosition, true);
   }
 }
