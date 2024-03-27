@@ -17,7 +17,7 @@ public class PauseMenu : MonoBehaviour
 
     public void PauseGame(bool currentlyPaused)
     {
-        //Time.timeScale = currentlyPaused ? 1 : 0;
+        Time.timeScale = currentlyPaused ? 1 : 0;
         PauseMenuCanvas.enabled = currentlyPaused ? false : true;
 
         isPaused = !isPaused;
