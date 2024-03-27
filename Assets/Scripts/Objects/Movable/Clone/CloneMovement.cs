@@ -29,6 +29,6 @@ public class CloneMovement : PlayerMovement
     }
 
     targetPosition = GetTargetPosition(mirrorDirection);
-    isMoving = CanMoveTo(targetPosition);
+    isMoving = CanMoveTo(targetPosition, true);
   }
 }

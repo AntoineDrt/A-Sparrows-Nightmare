@@ -10,7 +10,7 @@ public class CloneAttack : Object
         mapManager = this.mapManager ?? FindObjectOfType<MapManager>();
     }
 
-    public bool canAttack(Vector2Int currentPosition)
+    public bool CanAttack(Vector2Int currentPosition)
     {
         // Check every adjacent tiles, diagonals included. If the player is on any of them, return true.
         var adjacentTiles = new List<Vector2Int>
@@ -29,9 +29,9 @@ public class CloneAttack : Object
         {
             var targetPosition2D = currentPosition + new Vector2Int(tile.x, tile.y);
 
-            if (mapManager.ObjectsMap.ContainsKey(targetPosition2D))
+            if (mapManager.EntitiesMap.ContainsKey(targetPosition2D))
             {
-                if (mapManager.ObjectsMap[targetPosition2D].GetType() == typeof(PlayerMovement))
+                if (mapManager.EntitiesMap[targetPosition2D].GetType() == typeof(PlayerMovement))
                 {
                     return true;
                 }

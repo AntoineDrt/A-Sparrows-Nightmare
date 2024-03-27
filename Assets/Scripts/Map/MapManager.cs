@@ -18,6 +18,8 @@ public class MapManager : MonoBehaviour
     public Dictionary<Vector2Int, GameObject> FloorMap = new();
     public Dictionary<Vector2Int, Object> ObjectsMap = new();
 
+    public Dictionary<Vector2Int, Object> EntitiesMap = new();
+
     void Start()
     {
         Ready ??= new UnityEvent();
@@ -28,8 +30,8 @@ public class MapManager : MonoBehaviour
 
     public void UpdateMapPosition(Vector2Int oldPosition, Vector2Int newPosition, Object entity)
     {
-        ObjectsMap.Add(newPosition, entity);
-        ObjectsMap.Remove(oldPosition);
+        EntitiesMap.Add(newPosition, entity);
+        EntitiesMap.Remove(oldPosition);
     }
 
     private void GenerateMap()
@@ -117,6 +119,11 @@ public class MapManager : MonoBehaviour
         
         instance.mapManager = this;
         instance.transform.SetParent(transform);
-        ObjectsMap.Add(new Vector2Int(x, y), instance);
+        if(prefab.name == "Player" || prefab.name == "Clone")
+        {
+            EntitiesMap.Add(new Vector2Int(x, y), instance);
+        } else {
+            ObjectsMap.Add(new Vector2Int(x, y), instance);
+        }
     }
 }

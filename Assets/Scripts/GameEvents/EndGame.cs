@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,15 +9,18 @@ public class EndGame : MonoBehaviour
 
     [SerializeField] private GameObject whiteFadeIn;
     [SerializeField] private GameObject whiteFadeOut;
+    public Boolean gameEnded = false;
 
     // Start is called before the first frame update
     void Start()
     {
+
         whiteFadeOut.SetActive(true);
     }
 
     public void onWin()
     {
+        gameEnded = true;
         whiteFadeIn.SetActive(true);
         StartCoroutine(LoadNextScene());
     }
@@ -29,6 +33,7 @@ public class EndGame : MonoBehaviour
 
     public void onLose()
     {
+        gameEnded = true;
         whiteFadeIn.SetActive(true);
         StartCoroutine(ReloadScene());
     }
