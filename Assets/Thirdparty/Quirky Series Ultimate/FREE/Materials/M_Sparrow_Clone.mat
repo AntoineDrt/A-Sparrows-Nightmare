@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Sparrow
+  m_Name: M_Sparrow_Clone
   m_Shader: {fileID: 4800000, guid: 42f746eaacbc2a24d9618184e5392aa2, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
