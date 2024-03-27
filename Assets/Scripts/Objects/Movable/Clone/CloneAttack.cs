@@ -31,7 +31,7 @@ public class CloneAttack : Object
 
             if (mapManager.EntitiesMap.ContainsKey(targetPosition2D))
             {
-                if (mapManager.EntitiesMap[targetPosition2D].GetType() == typeof(PlayerMovement))
+                if (mapManager.EntitiesMap[targetPosition2D].CompareTag("Player"))
                 {
                     animator.SetBool("isAttacking", true);
 
