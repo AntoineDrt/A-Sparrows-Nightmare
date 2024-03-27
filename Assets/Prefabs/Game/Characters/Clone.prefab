@@ -222,6 +222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 89151365102157013}
   - component: {fileID: 9129583176394119384}
+  - component: {fileID: 4006002660400841364}
   m_Layer: 0
   m_Name: Clone
   m_TagString: Untagged
@@ -266,3 +267,15 @@ MonoBehaviour:
   moveInDirection:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4006002660400841364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4674284513346968752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78a9a0753b20cf74ba104aadbc61e0f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

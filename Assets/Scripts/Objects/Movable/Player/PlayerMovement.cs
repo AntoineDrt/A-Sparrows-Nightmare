@@ -21,6 +21,7 @@ public class PlayerMovement : Movable
   {
     MoveTo(targetPosition);
   }
+  
 
   public void OnMovePerformed(InputAction.CallbackContext context)
   {
@@ -46,8 +47,9 @@ public class PlayerMovement : Movable
       }
 
       targetPosition = GetTargetPosition(currentDirection);
-      isMoving = CanMoveTo(targetPosition);
+      isMoving = CanMoveTo(targetPosition, false);
       moveInDirection.Invoke(currentDirection);
     }
   }
 }
+
