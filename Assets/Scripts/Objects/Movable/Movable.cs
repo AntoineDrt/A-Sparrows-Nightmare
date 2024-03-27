@@ -63,7 +63,7 @@ public class Movable : Object
         mapManager.UpdateMapPosition(oldPosition, currentPosition, this);
         oldPosition = currentPosition;
         isMoving = false;
-        StartCoroutine(AttackAfterDelay(0.3f));
+        StartCoroutine(AttackAfterDelay(0.1f));
       }
     }
   }
