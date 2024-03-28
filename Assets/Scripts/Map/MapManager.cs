@@ -112,7 +112,7 @@ public class MapManager : MonoBehaviour
     {
         var instance = Instantiate(
             prefab,
-            new Vector3(x, 1, y),
+            new Vector3(x, 0.2f, y),
             Quaternion.identity,
             transform
         );

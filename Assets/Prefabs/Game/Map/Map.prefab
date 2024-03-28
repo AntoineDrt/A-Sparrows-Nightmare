@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6897030818996674178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3101266829329526219}
+  - component: {fileID: 7301867196438507617}
+  m_Layer: 0
+  m_Name: Map
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3101266829329526219
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6897030818996674178}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.8283772, y: -0.104291774, z: -2.645798}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7301867196438507617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6897030818996674178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef9093b1af8b495982cc7c9ce7cd31a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Blueprint: {fileID: 4900000, guid: 6ba615e19a877487d87731aa016bd9c7, type: 3}
+  Floor: {fileID: 6616142317143122160, guid: f8aa396952c169d4c898e4d8204c6b60, type: 3}
+  Bomb: {fileID: 6908240010411112289, guid: 1b01889e33995452590e33d413875d6b, type: 3}
+  Vent: {fileID: 5227765563458778410, guid: 27bb213dd44e84d8f9c623942d4dc4e5, type: 3}
+  Rock: {fileID: 7184349394327740332, guid: fc4bfe88c7adf4642862ed31bcc5ae0e, type: 3}
+  Player: {fileID: 5170969089546210413, guid: 9ddc65a21f8014ab3954b9a74e7b3df5, type: 3}
+  Clone: {fileID: 9129583176394119384, guid: 76e45b340cc7d4ba9a0d5f6756202d9e, type: 3}
+  Ready:
+    m_PersistentCalls:
+      m_Calls: []
