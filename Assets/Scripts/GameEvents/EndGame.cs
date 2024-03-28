@@ -7,21 +7,20 @@ using UnityEngine.SceneManagement;
 public class EndGame : MonoBehaviour
 {
 
-    [SerializeField] private GameObject whiteFadeIn;
-    [SerializeField] private GameObject whiteFadeOut;
-    public Boolean gameEnded = false;
+    [SerializeField] private GameObject fadeIn;
+    [SerializeField] private GameObject fadeOut;
+    public bool gameEnded = false;
 
     // Start is called before the first frame update
     void Start()
     {
-
-        whiteFadeOut.SetActive(true);
+        fadeOut.SetActive(true);
     }
 
     public void onWin()
     {
         gameEnded = true;
-        whiteFadeIn.SetActive(true);
+        fadeIn.SetActive(true);
         if(SceneManager.GetActiveScene().buildIndex == 6)
         {
             StartCoroutine(LoadMainMenu());
@@ -52,7 +51,7 @@ public class EndGame : MonoBehaviour
         animator.SetBool("isDying", true);
 
         gameEnded = true;
-        whiteFadeIn.SetActive(true);
+        fadeIn.SetActive(true);
         StartCoroutine(ReloadScene());
     }
 
