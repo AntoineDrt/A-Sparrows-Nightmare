@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[ExecuteAlways]
 public class MapManager : MonoBehaviour
 {
     [SerializeField] TextAsset Blueprint;
