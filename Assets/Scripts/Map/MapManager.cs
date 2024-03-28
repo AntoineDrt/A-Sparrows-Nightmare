@@ -11,6 +11,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] Object Bomb;
     [SerializeField] Object Vent;
     [SerializeField] Object Rock;
+    [SerializeField] Object Tree;
     [SerializeField] PlayerMovement Player;
     [SerializeField] CloneMovement Clone;
 
@@ -80,6 +81,7 @@ public class MapManager : MonoBehaviour
             'x' => Bomb,
             '#' => Vent,
             'o' => Rock,
+            'T' => Tree,
             _ => throw new Exception($"Could not handle Blueprint character {c}"),
         };
     }
@@ -117,13 +119,23 @@ public class MapManager : MonoBehaviour
             Quaternion.identity,
             transform
         );
-        
+
         instance.mapManager = this;
         instance.transform.SetParent(transform);
-        if(prefab.name == "Player" || prefab.name == "Clone")
+        if (prefab.name == "Player" || prefab.name == "Clone")
         {
             EntitiesMap.Add(new Vector2Int(x, y), instance);
-        } else {
+        }
+        else
+        {
+            if (prefab.name == "Tree")
+            {
+                instance.transform.localScale = new Vector3(
+                    UnityEngine.Random.Range(0.7f, 1.3f),
+                    UnityEngine.Random.Range(0.7f, 1.3f),
+                    UnityEngine.Random.Range(0.7f, 1.3f)
+                );
+            }
             ObjectsMap.Add(new Vector2Int(x, y), instance);
         }
     }
