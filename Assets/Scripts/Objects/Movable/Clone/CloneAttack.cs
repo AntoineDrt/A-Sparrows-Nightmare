@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CloneAttack : Object
+public class CloneAttack : MapObject
 {
     private Animator animator;
 
