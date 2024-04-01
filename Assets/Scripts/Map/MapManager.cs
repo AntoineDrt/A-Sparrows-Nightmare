@@ -7,19 +7,19 @@ public class MapManager : MonoBehaviour
 {
     [SerializeField] TextAsset Blueprint;
     [SerializeField] GameObject Floor;
-    [SerializeField] Object Bomb;
-    [SerializeField] Object Vent;
-    [SerializeField] Object Rock;
-    [SerializeField] Object Tree;
+    [SerializeField] MapObject Bomb;
+    [SerializeField] MapObject Vent;
+    [SerializeField] MapObject Rock;
+    [SerializeField] MapObject Tree;
     [SerializeField] PlayerMovement Player;
     [SerializeField] CloneMovement Clone;
 
     public UnityEvent Ready;
 
     public Dictionary<Vector2Int, GameObject> FloorMap = new();
-    public Dictionary<Vector2Int, Object> ObjectsMap = new();
+    public Dictionary<Vector2Int, MapObject> ObjectsMap = new();
 
-    public Dictionary<Vector2Int, Object> EntitiesMap = new();
+    public Dictionary<Vector2Int, MapObject> EntitiesMap = new();
 
     void Start()
     {
@@ -29,7 +29,7 @@ public class MapManager : MonoBehaviour
         Ready.Invoke();
     }
 
-    public void UpdateMapPosition(Vector2Int oldPosition, Vector2Int newPosition, Object entity)
+    public void UpdateMapPosition(Vector2Int oldPosition, Vector2Int newPosition, MapObject entity)
     {
         EntitiesMap.Add(newPosition, entity);
         EntitiesMap.Remove(oldPosition);
@@ -53,7 +53,7 @@ public class MapManager : MonoBehaviour
 
             if (c != '.')
             {
-                Object entity = CharToEntity(c);
+                MapObject entity = CharToEntity(c);
                 SpawnObject(entity, x, y);
             }
 
@@ -71,7 +71,7 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    private Object CharToEntity(char c)
+    private MapObject CharToEntity(char c)
     {
         return c switch
         {
@@ -110,7 +110,7 @@ public class MapManager : MonoBehaviour
         FloorMap.Add(new Vector2Int(x, y), instance);
     }
 
-    private void SpawnObject(Object prefab, int x, int y)
+    private void SpawnObject(MapObject prefab, int x, int y)
     {
         var instance = Instantiate(
             prefab,

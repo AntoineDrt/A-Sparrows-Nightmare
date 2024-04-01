@@ -1,6 +1,6 @@
 
 using UnityEngine;
 
-public class Object : MonoBehaviour {
+public class MapObject : MonoBehaviour {
   public MapManager mapManager;
 }
