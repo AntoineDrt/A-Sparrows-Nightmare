@@ -9,8 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 89151365102157013}
-  - component: {fileID: 9129583176394119384}
-  - component: {fileID: 4006002660400841364}
+  - component: {fileID: 5592106311894461527}
+  - component: {fileID: 4804998888476210553}
+  - component: {fileID: 1384338801770108643}
+  - component: {fileID: 5783792238325221959}
+  - component: {fileID: 3655565726289319170}
   m_Layer: 0
   m_Name: Clone
   m_TagString: Clone
@@ -34,7 +37,7 @@ Transform:
   - {fileID: 5162570849648779737}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9129583176394119384
+--- !u!114 &5592106311894461527
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,18 +46,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4674284513346968752}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4eb02bfacc2de45cf9cb6d3d685fa53e, type: 3}
+  m_Script: {fileID: 11500000, guid: 07b25ffc2e89c4fe18c6730d2d4e4177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapManager: {fileID: 0}
+  collidable: {fileID: 1384338801770108643}
   oldPosition: {x: 0, y: 0}
   currentPosition: {x: 0, y: 0}
-  moveSpeed: 10
-  isMoving: 0
-  moveInDirection:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &4006002660400841364
+  currentDirection: {x: 0, y: 0}
+  targetPosition: {x: 0, y: 0}
+--- !u!114 &4804998888476210553
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,10 +63,67 @@ MonoBehaviour:
   m_GameObject: {fileID: 4674284513346968752}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78a9a0753b20cf74ba104aadbc61e0f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 9dbb1cd094f734362a293ab03e3dde09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapManager: {fileID: 0}
+  movement: {fileID: 5592106311894461527}
+  isMirror: 1
+--- !u!114 &1384338801770108643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4674284513346968752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31c19b7ce4b0044b494e4c71b43ae7b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionList:
+  - {fileID: 8689998506251213869, guid: 5866e83bd853b59439b4555bee7fd699, type: 3}
+--- !u!114 &5783792238325221959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4674284513346968752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5bbde071d57c414a93e3c000a692d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movable: {fileID: 5592106311894461527}
+  animator: {fileID: 719218898290552847}
+--- !u!114 &3655565726289319170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4674284513346968752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8fa9c37e7096499faf012b3743e5407, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GotHurt:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3412648719645992454, guid: ecba47317c05a46a49cc48cf790b9a4a, type: 3}
+        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
+        m_MethodName: OnWin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  animator: {fileID: 719218898290552847}
 --- !u!1001 &8497054577616218704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -124,6 +181,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b402345f0b914e7ab13e0dc25db6cb3, type: 3}
+--- !u!95 &719218898290552847 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8939847404907190879, guid: 3b402345f0b914e7ab13e0dc25db6cb3, type: 3}
+  m_PrefabInstance: {fileID: 8497054577616218704}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5162570849648779737 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3625037934831455113, guid: 3b402345f0b914e7ab13e0dc25db6cb3, type: 3}
