@@ -9,7 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 919182619944768480}
+  - component: {fileID: 3300462326797900285}
   - component: {fileID: 5170969089546210413}
+  - component: {fileID: 4434837629208491694}
+  - component: {fileID: 6668195977363754610}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -33,6 +36,23 @@ Transform:
   - {fileID: 924065512257208382}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3300462326797900285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823541574675484979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b25ffc2e89c4fe18c6730d2d4e4177, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collidable: {fileID: 4434837629208491694}
+  oldPosition: {x: 0, y: 0}
+  currentPosition: {x: 0, y: 0}
+  currentDirection: {x: 0, y: 0}
+  targetPosition: {x: 0, y: 0}
 --- !u!114 &5170969089546210413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,14 +65,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dbb1cd094f734362a293ab03e3dde09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapManager: {fileID: 0}
-  oldPosition: {x: 0, y: 0}
-  currentPosition: {x: 0, y: 0}
-  moveSpeed: 10
-  isMoving: 0
-  moveInDirection:
+  movement: {fileID: 3300462326797900285}
+  isMirror: 0
+--- !u!114 &4434837629208491694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823541574675484979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31c19b7ce4b0044b494e4c71b43ae7b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionList:
+  - {fileID: 8689998506251213869, guid: 5866e83bd853b59439b4555bee7fd699, type: 3}
+  - {fileID: 3474423430582590281, guid: 27bb213dd44e84d8f9c623942d4dc4e5, type: 3}
+  - {fileID: 5352347528250386450, guid: fc4bfe88c7adf4642862ed31bcc5ae0e, type: 3}
+--- !u!114 &6668195977363754610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823541574675484979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8fa9c37e7096499faf012b3743e5407, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GotHurt:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3412648719645992454, guid: ecba47317c05a46a49cc48cf790b9a4a, type: 3}
+        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
+        m_MethodName: OnLose
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  animator: {fileID: 4795488891228836328}
 --- !u!1001 &141718280203371793
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -113,5 +171,10 @@ PrefabInstance:
 --- !u!4 &924065512257208382 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 947317956708418863, guid: 8e5ac1543233d496497463df553d7d2c, type: 3}
+  m_PrefabInstance: {fileID: 141718280203371793}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4795488891228836328 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4862625063128880377, guid: 8e5ac1543233d496497463df553d7d2c, type: 3}
   m_PrefabInstance: {fileID: 141718280203371793}
   m_PrefabAsset: {fileID: 0}
