@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -26,7 +25,7 @@ public class Movable : Object
   // If the game has ended, no one can move anymore
   public bool IsMovingDisabled()
   {
-    return GameObject.Find("GameManager").GetComponent<EndGame>().gameEnded;
+    return !LevelManager.Instance.movementsEnabled;
   }
 
   public bool IsInsideMap(Vector2Int targetPosition)
@@ -71,7 +70,7 @@ public class Movable : Object
 
     if (cloneAttack.CanAttack(currentPosition) && !hasAttacked)
     {
-      GameObject.Find("GameManager").GetComponent<EndGame>().onLose();
+      LevelManager.Instance.GetComponent<EndGame>().onLose();
       hasAttacked = true;
     }
   }

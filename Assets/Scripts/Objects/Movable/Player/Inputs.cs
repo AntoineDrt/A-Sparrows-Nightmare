@@ -9,7 +9,11 @@ public static class InputsInitializer {
         .With("Up", "<Keyboard>/upArrow")
         .With("Down", "<Keyboard>/downArrow")
         .With("Left", "<Keyboard>/leftArrow")
-        .With("Right", "<Keyboard>/rightArrow");
+        .With("Right", "<Keyboard>/rightArrow")
+        .With("Up", "<Keyboard>/w")
+        .With("Down", "<Keyboard>/s")
+        .With("Left", "<Keyboard>/a")
+        .With("Right", "<Keyboard>/d");
 
     playerInput.performed += OnMovePerformed;
     playerInput.Enable();

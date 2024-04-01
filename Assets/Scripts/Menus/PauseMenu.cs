@@ -33,7 +33,7 @@ public class PauseMenu : MonoBehaviour
 
     public void OnMuteMusic()
     {
-        var audioSource = GameObject.Find("GameManager").GetComponent<AudioSource>();
+        var audioSource = LevelManager.Instance.GetComponent<AudioSource>();
         audioSource.mute = !audioSource.mute;
     }
 }

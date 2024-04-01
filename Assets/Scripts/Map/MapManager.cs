@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[ExecuteAlways]
 public class MapManager : MonoBehaviour
 {
     [SerializeField] TextAsset Blueprint;
@@ -128,14 +127,14 @@ public class MapManager : MonoBehaviour
         }
         else
         {
-            if (prefab.name == "Tree")
-            {
-                instance.transform.localScale = new Vector3(
-                    UnityEngine.Random.Range(0.7f, 1.3f),
-                    UnityEngine.Random.Range(0.7f, 1.3f),
-                    UnityEngine.Random.Range(0.7f, 1.3f)
-                );
-            }
+            // if (prefab.name == "Tree")
+            // {
+            //     instance.transform.localScale = new Vector3(
+            //         UnityEngine.Random.Range(0.7f, 1.3f),
+            //         UnityEngine.Random.Range(0.7f, 1.3f),
+            //         UnityEngine.Random.Range(0.7f, 1.3f)
+            //     );
+            // }
             ObjectsMap.Add(new Vector2Int(x, y), instance);
         }
     }

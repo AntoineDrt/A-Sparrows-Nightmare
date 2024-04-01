@@ -1,9 +1,7 @@
-9.#....oo
-#...#...#
-o.o.o.#.o
-.#.o#...o
-oo.ox...o
-......#ox
-.o.xx....
-....#.ox.
-x..xx.#.6
+xxxxxxx
+TTTTTTx
+T9..xTx
+T...xTx
+T....Tx
+To#x.Tx
+Tx.6.Tx

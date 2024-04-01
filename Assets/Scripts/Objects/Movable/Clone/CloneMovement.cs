@@ -8,6 +8,13 @@ public class CloneMovement : Movable
   {
     base.Start();
     InputsInitializer.InitMoveAction(OnMovePerformed);
+    mapManager.Ready.AddListener(LookAtPlayer);
+  }
+
+  private void LookAtPlayer()
+  {
+    var player = GameObject.FindGameObjectWithTag("Player");
+    transform.LookAt(player.transform);
   }
 
   public void OnMovePerformed(InputAction.CallbackContext context)
@@ -49,18 +56,17 @@ public class CloneMovement : Movable
 
     if (IsPositionOccupied(targetPosition2D))
     {
-      if (mapManager.ObjectsMap[targetPosition2D].CompareTag("Vent"))
+      if (mapManager.ObjectsMap[targetPosition2D].CompareTag("Tree"))
       {
-        return true;
+        return false;
       }
 
       if (mapManager.ObjectsMap[targetPosition2D].CompareTag("Bomb"))
       {
-        GameObject.Find("GameManager").GetComponent<EndGame>().onWin();
-        return true;
+        LevelManager.Instance.GetComponent<EndGame>().onWin();
       }
 
-      return false;
+      return true;
     }
 
     return true;

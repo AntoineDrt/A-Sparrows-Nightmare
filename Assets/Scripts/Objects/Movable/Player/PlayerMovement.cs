@@ -53,7 +53,7 @@ public class PlayerMovement : Movable
       // Depending on who steps on the bomb, the game is won or lost
       if (mapManager.ObjectsMap[targetPosition].CompareTag("Bomb"))
       {
-        GameObject.Find("GameManager").GetComponent<EndGame>().onLose();
+        LevelManager.Instance.GetComponent<EndGame>().onLose();
         return true;
       }
       return false;

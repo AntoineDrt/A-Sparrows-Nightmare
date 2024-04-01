@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -7,7 +6,7 @@ public class MainMenu : MonoBehaviour
     {
         if (Input.anyKey)
         {
-            SceneManager.LoadScene(1);
+            LevelManager.Instance.LoadScene(1);
         }
     }
 }
