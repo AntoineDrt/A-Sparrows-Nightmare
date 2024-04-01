@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Movable : Object
+public class Movable : MapObject
 {
   public Vector2Int oldPosition;
   public Vector2Int currentPosition;
