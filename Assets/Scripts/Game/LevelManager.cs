@@ -9,7 +9,7 @@ public class LevelManager : MonoBehaviour
 
   public static LevelManager Instance;
   public bool movementsEnabled = false;
-
+  public bool sceneLoadingInProgress = false;
 
   private void Awake()
   {
@@ -26,6 +26,9 @@ public class LevelManager : MonoBehaviour
 
   public void LoadScene(int sceneIndex)
   {
+    if (sceneLoadingInProgress) return;
+
+    sceneLoadingInProgress = true;
     StartCoroutine(LoadSceneAsync(sceneIndex));
   }
 
@@ -41,6 +44,7 @@ public class LevelManager : MonoBehaviour
     scene.allowSceneActivation = true;
 
     yield return transition.AnimateTransitionOut();
+    sceneLoadingInProgress = false;
     movementsEnabled = true;
   }
 }
