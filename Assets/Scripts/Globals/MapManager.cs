@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -22,6 +23,9 @@ public class MapManager : MonoBehaviour
     public readonly Dictionary<Vector2Int, GameObject> FloorMap = new();
     public readonly Dictionary<Vector2Int, GameObject> ObjectsMap = new();
     public readonly Dictionary<Vector2Int, GameObject> EntitiesMap = new();
+
+    private GameObject mapContainer;
+    private bool loadingInProgress = false;
 
     private void Awake()
     {
@@ -50,8 +54,13 @@ public class MapManager : MonoBehaviour
 
     public void GenerateMap(int index)
     {
+        if (loadingInProgress) return;
+        
         CleanUp();
         LoadMapBlueprint(index);
+
+        mapContainer = new GameObject("Container");
+        mapContainer.transform.SetParent(transform);
 
         var x = 0;
         var y = 0;
@@ -65,18 +74,33 @@ public class MapManager : MonoBehaviour
                 continue;
             }
 
-            SpawnFloor(x, y);
+            InstantiateFloor(x, y);
 
             if (c != '.')
             {
                 var entity = CharToEntity(c);
-                SpawnObject(entity, x, y);
+                InstantiateObject(entity, x, y);
             }
 
             x++;
         }
 
         MapGenerated.Invoke();
+    }
+
+    public IEnumerator AnimateObjectSpawn(GameObject mapObject)
+    {
+        mapObject.SetActive(true);
+        var spawn = mapObject.GetComponent<ScaleSpawn>();
+        yield return spawn.SpawnAsync(1.5f, 0.07f);
+        StartCoroutine(spawn.SpawnAsync(1, 0.05f));
+    }
+
+    public IEnumerator AnimateMapSpawn()
+    {
+        // foreach (var floor in FloorMap.Values) yield return AnimateObjectSpawn(floor);
+        foreach (var mapObject in ObjectsMap.Values) yield return AnimateObjectSpawn(mapObject);
+        foreach (var entity in EntitiesMap.Values) yield return AnimateObjectSpawn(entity);
     }
 
     public bool IsPositionOccupied(Vector2Int targetPosition)
@@ -115,12 +139,11 @@ public class MapManager : MonoBehaviour
 
     private void CleanUp()
     {
-        var childCount = transform.childCount;
+        Destroy(mapContainer);
 
-        for (var i = 0; i < childCount - 1; i++)
-        {
-            Destroy(transform.GetChild(i).gameObject);
-        }
+        FloorMap.Clear();
+        ObjectsMap.Clear();
+        EntitiesMap.Clear();
     }
 
     private GameObject CharToEntity(char c)
@@ -137,7 +160,7 @@ public class MapManager : MonoBehaviour
         };
     }
 
-    private void SpawnFloor(int x, int y)
+    private void InstantiateFloor(int x, int y)
     {
         var instance = Instantiate(
             Floor,
@@ -145,20 +168,21 @@ public class MapManager : MonoBehaviour
             Quaternion.identity
         );
 
-        instance.transform.SetParent(transform);
+        instance.transform.SetParent(mapContainer.transform);
+
         FloorMap.Add(new Vector2Int(x, y), instance);
     }
 
-    private void SpawnObject(GameObject prefab, int x, int y)
+    private void InstantiateObject(GameObject prefab, int x, int y)
     {
         var instance = Instantiate(
             prefab,
             new Vector3(x, 0.2f, y),
-            Quaternion.identity,
-            transform
+            Quaternion.identity
         );
 
-        instance.transform.SetParent(transform);
+        instance.transform.SetParent(mapContainer.transform);
+        instance.SetActive(false);
 
         if (prefab.name == "Player" || prefab.name == "Clone")
         {
@@ -166,14 +190,6 @@ public class MapManager : MonoBehaviour
         }
         else
         {
-            if (prefab.name == "Tree")
-            {
-                instance.transform.localScale = new Vector3(
-                    UnityEngine.Random.Range(0.7f, 1.3f),
-                    UnityEngine.Random.Range(0.7f, 1.3f),
-                    UnityEngine.Random.Range(0.7f, 1.3f)
-                );
-            }
             ObjectsMap.Add(new Vector2Int(x, y), instance);
         }
     }

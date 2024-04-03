@@ -44,8 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef9093b1af8b495982cc7c9ce7cd31a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Blueprint: {fileID: 0}
-  Floor: {fileID: 6616142317143122160, guid: f8aa396952c169d4c898e4d8204c6b60, type: 3}
+  Floor: {fileID: 6616142317143122160, guid: badb487a38f0546268bd5d46a766a6f5, type: 3}
   Fire: {fileID: 1926319179393921224, guid: 1b01889e33995452590e33d413875d6b, type: 3}
   Bush: {fileID: 3474423430582590281, guid: 27bb213dd44e84d8f9c623942d4dc4e5, type: 3}
   Rock: {fileID: 5352347528250386450, guid: fc4bfe88c7adf4642862ed31bcc5ae0e, type: 3}
@@ -55,4 +54,5 @@ MonoBehaviour:
   MapGenerated:
     m_PersistentCalls:
       m_Calls: []
+  Blueprint: {fileID: 0}
   movementsEnabled: 0
