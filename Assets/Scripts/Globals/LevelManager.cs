@@ -26,16 +26,32 @@ public class LevelManager : MonoBehaviour
     }
   }
 
-  public void StartGame()
+  private void Start() 
   {
-    LoadScene(1);
-    LoadLevel(0);
+    MapManager.Instance.MapGenerated.AddListener(OnMapGenerated);
   }
 
-  public void LoadLevel(int levelIndex)
+  public void StartGame()
   {
+    StartCoroutine(StartGameAsync());
+  }
+
+  public IEnumerator StartGameAsync()
+  {
+    yield return LoadSceneAsync(1);
+    StartCoroutine(LoadLevelAsync(0));
+  }
+
+  public IEnumerator LoadLevelAsync(int levelIndex)
+  {
+    yield return transition.AnimateTransitionIn();
     MapManager.Instance.GenerateMap(levelIndex);
     currentLevel = levelIndex;
+  }
+
+  public void ReloadLevel()
+  {
+    StartCoroutine(LoadLevelAsync(currentLevel));
   }
 
   public void LoadScene(int sceneIndex)
@@ -56,8 +72,6 @@ public class LevelManager : MonoBehaviour
     yield return transition.AnimateTransitionIn();
 
     scene.allowSceneActivation = true;
-
-    yield return transition.AnimateTransitionOut();
     sceneLoadingInProgress = false;
     movementsEnabled = true;
   }
@@ -71,19 +85,24 @@ public class LevelManager : MonoBehaviour
       StartCoroutine(LoadMainMenu());
     }
 
-    StartCoroutine(LoadNextLevel());
+    LoadNextLevel();
   }
 
   public void OnLose()
   {
-    movementsEnabled = false;
-    StartCoroutine(ReloadLevel());
+    StartCoroutine(OnLoseAsync());
   }
 
-  IEnumerator LoadNextLevel()
+  public IEnumerator OnLoseAsync() 
   {
-    yield return new WaitForSeconds(1f);
-    LoadLevel(currentLevel + 1);
+    movementsEnabled = false;
+    yield return transition.AnimateTransitionIn();
+    ReloadLevel();
+  }
+
+  void LoadNextLevel()
+  {
+    LoadLevelAsync(currentLevel + 1);
   }
 
   IEnumerator LoadMainMenu()
@@ -92,9 +111,9 @@ public class LevelManager : MonoBehaviour
     LoadScene(0);
   }
 
-  IEnumerator ReloadLevel()
+  private void OnMapGenerated()
   {
-    yield return new WaitForSeconds(0.5f);
-    LoadLevel(currentLevel);
+    StartCoroutine(transition.AnimateTransitionOut());
+    StartCoroutine(MapManager.Instance.AnimateMapSpawn());
   }
 }
