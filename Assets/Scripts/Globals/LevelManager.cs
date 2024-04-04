@@ -113,7 +113,13 @@ public class LevelManager : MonoBehaviour
 
   private void OnMapGenerated()
   {
-    StartCoroutine(transition.AnimateTransitionOut());
-    StartCoroutine(MapManager.Instance.AnimateMapSpawn());
+    StartCoroutine(OnMapGeneratedAsync());
+  }
+  
+  private IEnumerator OnMapGeneratedAsync()
+  {
+    yield return transition.AnimateTransitionOut();
+    yield return MapManager.Instance.AnimateMapSpawn();
+    movementsEnabled = true;
   }
 }
