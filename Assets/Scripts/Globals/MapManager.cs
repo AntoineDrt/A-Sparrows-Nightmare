@@ -14,15 +14,13 @@ public class MapManager : MonoBehaviour
     [SerializeField] GameObject Player;
     [SerializeField] GameObject Clone;
 
-    public UnityEvent MapGenerated;
-
-    public TextAsset Blueprint;
-    public static MapManager Instance;
-    public bool movementsEnabled = false;
-
     public readonly Dictionary<Vector2Int, GameObject> FloorMap = new();
     public readonly Dictionary<Vector2Int, GameObject> ObjectsMap = new();
     public readonly Dictionary<Vector2Int, GameObject> EntitiesMap = new();
+
+    public static MapManager Instance;
+    public UnityEvent MapGenerated;
+    public TextAsset Blueprint;
 
     private GameObject mapContainer;
     private bool loadingInProgress = false;
@@ -57,7 +55,7 @@ public class MapManager : MonoBehaviour
         if (loadingInProgress) return;
 
         loadingInProgress = true;
-        
+
         CleanUp();
         LoadMapBlueprint(index);
 
@@ -88,23 +86,17 @@ public class MapManager : MonoBehaviour
         }
 
         loadingInProgress = false;
-        
-        MapGenerated.Invoke();
-    }
 
-    public IEnumerator AnimateObjectSpawn(GameObject mapObject)
-    {
-        mapObject.SetActive(true);
-        var spawn = mapObject.GetComponent<ScaleSpawn>();
-        yield return spawn.SpawnAsync(1.5f, 0.07f);
-        StartCoroutine(spawn.SpawnAsync(1, 0.05f));
+        MapGenerated.Invoke();
     }
 
     public IEnumerator AnimateMapSpawn()
     {
-        // foreach (var floor in FloorMap.Values) yield return AnimateObjectSpawn(floor);
-        foreach (var mapObject in ObjectsMap.Values) yield return AnimateObjectSpawn(mapObject);
-        foreach (var entity in EntitiesMap.Values) yield return AnimateObjectSpawn(entity);
+        foreach (var mapObject in ObjectsMap.Values)
+            yield return mapObject.GetComponent<ScaleSpawn>().Animate();
+
+        foreach (var entity in EntitiesMap.Values)
+            yield return entity.GetComponent<ScaleSpawn>().Animate();
     }
 
     public bool IsPositionOccupied(Vector2Int targetPosition)

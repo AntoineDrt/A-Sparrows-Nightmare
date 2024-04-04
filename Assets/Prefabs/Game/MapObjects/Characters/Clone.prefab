@@ -125,6 +125,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   animator: {fileID: 719218898290552847}
+  vulnerabilityList: []
 --- !u!114 &4267305089498389489
 MonoBehaviour:
   m_ObjectHideFlags: 0
