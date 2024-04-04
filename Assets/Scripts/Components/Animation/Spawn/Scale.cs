@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class ScaleSpawn : MonoBehaviour
 {
+  public IEnumerator Animate()
+  {
+    gameObject.SetActive(true);
+    yield return SpawnAsync(1.5f, 0.07f);
+    StartCoroutine(SpawnAsync(1, 0.05f));
+  }
+
   public void Spawn(float finalScale, float time)
   {
     transform.DOScale(finalScale, time);

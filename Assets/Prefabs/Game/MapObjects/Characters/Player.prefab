@@ -101,6 +101,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   animator: {fileID: 4795488891228836328}
+  vulnerabilityList: []
 --- !u!114 &3025722460829462504
 MonoBehaviour:
   m_ObjectHideFlags: 0
