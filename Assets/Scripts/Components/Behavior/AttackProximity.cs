@@ -48,6 +48,7 @@ public class AttackProximity : MonoBehaviour
 
   private void Attack(GameObject target)
   {
+    hasAttacked = true;
     animator.SetBool("isAttacking", true);
     var vulnerable = target.GetComponent<Vulnerable>();
     vulnerable.GetHurt();
