@@ -55,6 +55,8 @@ public class MapManager : MonoBehaviour
     public void GenerateMap(int index)
     {
         if (loadingInProgress) return;
+
+        loadingInProgress = true;
         
         CleanUp();
         LoadMapBlueprint(index);
@@ -85,6 +87,8 @@ public class MapManager : MonoBehaviour
             x++;
         }
 
+        loadingInProgress = false;
+        
         MapGenerated.Invoke();
     }
 
