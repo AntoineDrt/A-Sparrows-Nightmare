@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,7 +9,12 @@ public class InputMovement : MonoBehaviour
 
   void Start()
   {
-    InputsInitializer.InitMoveAction(HandleMoveInput);
+    InputManager.playerInput.performed += HandleMoveInput;
+  }
+
+  void OnDestroy()
+  {
+    InputManager.playerInput.performed -= HandleMoveInput;
   }
 
   public void HandleMoveInput(InputAction.CallbackContext context)
@@ -23,7 +27,8 @@ public class InputMovement : MonoBehaviour
     else if (input.y > 0) direction = Vector2Int.up;
     else if (input.y < 0) direction = Vector2Int.down;
 
-    if (isMirror) {
+    if (isMirror)
+    {
       direction = -direction;
     }
 

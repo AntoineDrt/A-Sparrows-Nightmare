@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class Movable : MonoBehaviour
@@ -14,7 +15,6 @@ public class Movable : MonoBehaviour
   private readonly LevelManager levelManager = LevelManager.Instance;
   private readonly float moveSpeed = 10f;
   private bool isMoving = false;
-  private bool hasAttacked = false;
 
   public virtual void Start()
   {
@@ -62,7 +62,6 @@ public class Movable : MonoBehaviour
       mapManager.UpdateMapPosition(oldPosition, currentPosition, gameObject);
       oldPosition = currentPosition;
       isMoving = false;
-      // StartCoroutine(AttackAfterDelay(0.1f));
     }
   }
 
