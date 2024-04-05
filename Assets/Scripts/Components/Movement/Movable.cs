@@ -40,6 +40,7 @@ public class Movable : MonoBehaviour
       !mapManager.IsInsideMap(position) ||
       (collidable && !collidable.CanMoveTo(position)))
     {
+      EndMovement();
       return;
     }
 
@@ -58,11 +59,22 @@ public class Movable : MonoBehaviour
 
     if (transform.position == targetPosition3D)
     {
-      currentPosition = Converter.To2D(transform.position);
+      EndMovement();
+    }
+  }
+
+  private void EndMovement()
+  {
+    currentPosition = Converter.To2D(transform.position);
+
+    if (currentDirection != oldPosition)
+    {
       mapManager.UpdateMapPosition(oldPosition, currentPosition, gameObject);
       oldPosition = currentPosition;
-      isMoving = false;
     }
+
+    isMoving = false;
+    TurnManager.Instance.MovePhase.Done();
   }
 
   public void LookInDirection(Vector2Int direction)

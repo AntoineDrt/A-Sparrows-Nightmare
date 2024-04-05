@@ -41,8 +41,8 @@ public class MapManager : MonoBehaviour
 
     public void UpdateMapPosition(Vector2Int oldPosition, Vector2Int newPosition, GameObject entity)
     {
-        EntitiesMap.Add(newPosition, entity);
         EntitiesMap.Remove(oldPosition);
+        EntitiesMap.Add(newPosition, entity);
     }
 
     public void LoadMapBlueprint(int index)

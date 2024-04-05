@@ -5,10 +5,8 @@ public class PlayerManager : MonoBehaviour
 {
   [SerializeField] Vulnerable vulnerable;
 
-  void Start() 
+  private void Start() 
   {
     vulnerable.GotHurt.AddListener(LevelManager.Instance.OnLose);
   }
-
-
 }
