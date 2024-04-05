@@ -102,7 +102,7 @@ public class LevelManager : MonoBehaviour
 
   void LoadNextLevel()
   {
-    LoadLevelAsync(currentLevel + 1);
+    StartCoroutine(LoadLevelAsync(currentLevel + 1));
   }
 
   IEnumerator LoadMainMenu()
