@@ -9,12 +9,12 @@ public class InputMovement : MonoBehaviour
 
   void Start()
   {
-    InputManager.playerInput.performed += HandleMoveInput;
+    TurnManager.Instance.MovePhase.AddListener(HandleMoveInput);
   }
 
   void OnDestroy()
   {
-    InputManager.playerInput.performed -= HandleMoveInput;
+    TurnManager.Instance.MovePhase.RemoveListener(HandleMoveInput);
   }
 
   public void HandleMoveInput(InputAction.CallbackContext context)

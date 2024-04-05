@@ -12,12 +12,18 @@ public class AttackProximity : MonoBehaviour
   private List<Vector2Int> adjacentDirections;
   private bool hasAttacked = false;
 
-  void Start()
+  private void Start()
   {
+    TurnManager.Instance.ActionPhase.AddListener(TryToAttack);
     adjacentDirections = GetAdjacentDirections();
   }
 
-  void Update()
+  private void OnDestroy()
+  {
+    TurnManager.Instance.ActionPhase.RemoveListener(TryToAttack);
+  }
+
+  private void TryToAttack()
   {
     var target = FindTarget();
 
@@ -25,6 +31,8 @@ public class AttackProximity : MonoBehaviour
     {
       Attack(target);
     }
+
+    TurnManager.Instance.ActionPhase.Done();
   }
 
   private GameObject FindTarget()
@@ -48,9 +56,10 @@ public class AttackProximity : MonoBehaviour
 
   private void Attack(GameObject target)
   {
-    hasAttacked = true;
-    animator.SetBool("isAttacking", true);
     var vulnerable = target.GetComponent<Vulnerable>();
+    hasAttacked = true;
+    
+    animator.SetBool("isAttacking", true);
     vulnerable.GetHurt();
   }
 

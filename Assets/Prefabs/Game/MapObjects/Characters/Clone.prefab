@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5783792238325221959}
   - component: {fileID: 3655565726289319170}
   - component: {fileID: 4267305089498389489}
+  - component: {fileID: 1339880121810890059}
   m_Layer: 0
   m_Name: Clone
   m_TagString: Clone
@@ -138,6 +139,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57a2dc2e2a34f4824b42b4d787b6cdf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1339880121810890059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4674284513346968752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8546af85c34cc441eb173d9be3104611, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vulnerable: {fileID: 3655565726289319170}
 --- !u!1001 &8497054577616218704
 PrefabInstance:
   m_ObjectHideFlags: 0
